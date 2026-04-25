@@ -29,4 +29,7 @@ class Settings(BaseSettings):
 
     max_token_buffer: int = 2000
 
+    # Database for Chainlit chat history (PostgreSQL required for SQLAlchemyDataLayer)
+    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/chainlit"
+
 settings = Settings()

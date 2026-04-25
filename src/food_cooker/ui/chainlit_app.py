@@ -1,10 +1,11 @@
 import chainlit as cl
+from chainlit.types import ThreadDict
 import uuid
 import json
-import re
 import asyncio
 import logging
 import time
+from typing import Optional
 from food_cooker.llm import get_llm
 from food_cooker.agent.tools import (
     user_profile_tool,
@@ -14,10 +15,10 @@ from food_cooker.agent.tools import (
     shopping_list_tool,
     feedback_tool,
 )
+from food_cooker.settings import settings
 
 logger = logging.getLogger(__name__)
 
-# All tools in execution order
 ALL_TOOLS = [
     user_profile_tool,
     recipe_retriever_tool,
@@ -40,6 +41,55 @@ session_id 由 Chainlit 提供（在 input 的 [session_id=xxx] 中），直接�
 """
 
 
+@cl.data_layer
+def get_data_layer():
+    from chainlit.data.sql_alchemy import SQLAlchemyDataLayer
+    return SQLAlchemyDataLayer(conninfo=settings.database_url)
+
+
+@cl.password_auth_callback
+def auth_callback(username: str, password: str) -> Optional[cl.User]:
+    if username == "admin" and password == "admin123":
+        return cl.User(identifier="admin", metadata={"role": "admin"})
+    return None
+
+
+@cl.on_chat_resume
+async def on_chat_resume(thread: ThreadDict):
+    logger.info(f"on_chat_resume called, thread id={thread.get('id')}, steps count={len(thread.get('steps', []))}")
+    session_id = thread.get("id", str(uuid.uuid4())[:8])
+    cl.user_session.set("session_id", session_id)
+
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    for step in thread.get("steps", []):
+        step_type = step.get("type", "")
+        if step_type == "user_message":
+            content = step.get("input", "") or step.get("content", "")
+            if content:
+                messages.append({"role": "user", "content": content})
+        elif step_type == "assistant_message":
+            output = step.get("output", "") or step.get("content", "")
+            tool_calls = step.get("toolCalls", [])
+            if tool_calls:
+                messages.append({"role": "assistant", "content": output, "tool_calls": tool_calls})
+            elif output:
+                messages.append({"role": "assistant", "content": output})
+
+    logger.info(f"Restored {len(messages)} messages for session {session_id}")
+    cl.user_session.set("messages", messages)
+
+
+@cl.on_chat_start
+async def on_chat_start():
+    session_id = str(uuid.uuid4())[:8]
+    cl.user_session.set("session_id", session_id)
+    cl.user_session.set("messages", [{"role": "system", "content": SYSTEM_PROMPT}])
+
+    await cl.Message(
+        content="👋 欢迎使用个性化食谱助手！请告诉我你想做什么菜，或者分享你现有的食材。"
+    ).send()
+
+
 @cl.on_message
 async def main(message: cl.Message):
     session_id = cl.user_session.get("session_id")
@@ -47,7 +97,6 @@ async def main(message: cl.Message):
         session_id = str(uuid.uuid4())[:8]
         cl.user_session.set("session_id", session_id)
 
-    # Load conversation history from session, or start fresh with system prompt
     messages = cl.user_session.get("messages")
     if messages is None:
         messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -60,7 +109,6 @@ async def main(message: cl.Message):
     msg = cl.Message(content="正在思考中...")
     await msg.send()
 
-    # Append user message to conversation history
     messages.append({"role": "user", "content": full_input})
 
     max_turns = 20
@@ -68,25 +116,22 @@ async def main(message: cl.Message):
         turn_start = time.time()
         logger.info(f"Turn {turn + 1}/{max_turns} - invoking LLM...")
 
-        # Run synchronous chain.invoke() in thread pool to avoid blocking event loop
         response = await asyncio.to_thread(chain.invoke, messages)
         turn_time = time.time() - turn_start
         logger.info(f"Turn {turn + 1} LLM call done in {turn_time:.1f}s")
 
-        # Add assistant message to history
         messages.append({"role": "assistant", "content": response.content, "tool_calls": response.tool_calls})
 
-        # If no tool calls, we're done
         if not response.tool_calls:
             logger.info(f"Turn {turn + 1}: No more tool calls, finishing")
-            msg.content = response.content
+            await msg.remove()
+            final_msg = cl.Message(content=response.content)
+            await final_msg.send()
             cl.user_session.set("messages", messages)
-            await msg.update()
             return
 
         logger.info(f"Turn {turn + 1}: {len(response.tool_calls)} tool call(s): {[tc['name'] for tc in response.tool_calls]}")
 
-        # Execute each tool call (these are CPU-bound/local, run in thread for safety)
         for tc in response.tool_calls:
             tool_name = tc["name"]
             tool_args = tc["args"]
@@ -95,13 +140,12 @@ async def main(message: cl.Message):
                 tool_result = {"error": f"Unknown tool: {tool_name}"}
             else:
                 try:
-                    tool_result = tool_obj.invoke(tool_args)
+                    tool_result = await asyncio.to_thread(tool_obj.invoke, tool_args)
                 except Exception as e:
                     tool_result = {"error": str(e)}
 
             logger.info(f"Turn {turn + 1}: {tool_name} -> {list(tool_result.keys()) if isinstance(tool_result, dict) else type(tool_result).__name__}")
 
-            # Add tool message
             tool_msg = {
                 "role": "tool",
                 "tool_call_id": tc["id"],
@@ -110,10 +154,8 @@ async def main(message: cl.Message):
             }
             messages.append(tool_msg)
 
-        # Loop continues - next LLM call will process tool results
-
-    # Max turns reached
     logger.warning("Max turns reached")
-    msg.content = "抱歉，执行次数超限，请重试。"
+    await msg.remove()
+    final_msg = cl.Message(content="抱歉，执行次数超限，请重试。")
+    await final_msg.send()
     cl.user_session.set("messages", messages)
-    await msg.update()

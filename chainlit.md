@@ -1,14 +1,29 @@
-# Welcome to Chainlit! 🚀🤖
+# 欢迎使用 FoodCooker！🍳🤖
 
-Hi there, Developer! 👋 We're excited to have you on board. Chainlit is a powerful tool designed to help you prototype, debug and share applications built on top of LLMs.
+你好，开发者！👋 欢迎使用 FoodCooker —— 一个基于 LangChain + RAG 的个性化食谱推荐助手。
 
-## Useful Links 🔗
+## 功能说明 📋
 
-- **Documentation:** Get started with our comprehensive [Chainlit Documentation](https://docs.chainlit.io) 📚
-- **Discord Community:** Join our friendly [Chainlit Discord](https://discord.gg/k73SQ3FyUh) to ask questions, share your projects, and connect with other developers! 💬
+- 根据你现有的食材推荐美味菜谱
+- 根据你的饮食偏好（过敏、口味、菜系）定制食谱
+- 计算营养成分，生成购物清单
 
-We can't wait to see what you create with Chainlit! Happy coding! 💻😊
+## 使用方法 🍽️
 
-## Welcome screen
+1. 告诉我你现有的食材（如：鸡蛋、西红柿）
+2. 告诉我你的饮食偏好（如：不吃辣、清淡）
+3. 我会为你推荐并定制专属食谱！
 
-To modify the welcome screen, edit the `chainlit.md` file at the root of your project. If you do not want a welcome screen, just leave this file empty.
+## 常见问题 💡
+
+**Q: 如何更改语言偏好？**
+直接在对话中告诉我你的偏好即可，我会记住并在后续推荐中考虑。
+
+**Q: 食材不够怎么办？**
+我会自动生成购物清单，告诉你还需要购买哪些食材。
+
+祝你烹饪愉快！💻😊
+
+## 启动说明
+
+如需修改欢迎页面，请编辑项目根目录下的 `chainlit.md` 文件。如不需要欢迎页，保留此文件为空即可。
