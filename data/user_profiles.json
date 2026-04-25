@@ -1,0 +1,9 @@
+{
+  "session_abc": {
+    "session_id": "session_abc",
+    "allergies": [
+      "peanuts"
+    ],
+    "diet": "low_carb"
+  }
+}

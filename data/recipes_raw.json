@@ -1,0 +1,259 @@
+[
+  {
+    "name": "蒜蓉西兰花鸡胸肉",
+    "cuisine": "Chinese",
+    "tags": ["low-carb", "high-protein", "stir-fry", "quick"],
+    "ingredients": [
+      {"name": "鸡胸肉", "amount": "200g"},
+      {"name": "西兰花", "amount": "150g"},
+      {"name": "大蒜", "amount": "3瓣"},
+      {"name": "橄榄油", "amount": "1 tbsp"},
+      {"name": "酱油", "amount": "1 tbsp"},
+      {"name": "盐", "amount": "少许"}
+    ],
+    "steps": [
+      "鸡胸肉切丁，用少许盐和酱油腌制10分钟",
+      "西兰花焯水2分钟捞出备用",
+      "热锅下油，爆香蒜末",
+      "加入鸡胸肉翻炒至变色",
+      "加入西兰花快速翻炒均匀",
+      "出锅前加少许盐调味"
+    ],
+    "nutrition": {
+      "calories": 320,
+      "protein": 42,
+      "carbs": 8,
+      "fat": 12
+    }
+  },
+  {
+    "name": "宫保鸡丁",
+    "cuisine": "Chinese",
+    "tags": ["high-protein", "stir-fry", "spicy"],
+    "ingredients": [
+      {"name": "鸡胸肉", "amount": "200g"},
+      {"name": "花生", "amount": "30g"},
+      {"name": "干辣椒", "amount": "5个"},
+      {"name": "花椒", "amount": "1 tsp"},
+      {"name": "酱油", "amount": "2 tbsp"},
+      {"name": "醋", "amount": "1 tbsp"},
+      {"name": "糖", "amount": "1 tsp"},
+      {"name": "葱", "amount": "2根"}
+    ],
+    "steps": [
+      "鸡胸肉切丁，用料酒和盐腌制",
+      "调酱汁：酱油、醋、糖混合",
+      "热锅下油，小火炒香花椒和干辣椒",
+      "加入鸡胸肉大火翻炒",
+      "倒入酱汁快速翻炒",
+      "加入花生和葱段翻炒均匀"
+    ],
+    "nutrition": {
+      "calories": 380,
+      "protein": 38,
+      "carbs": 12,
+      "fat": 18
+    }
+  },
+  {
+    "name": "清蒸鱼片",
+    "cuisine": "Chinese",
+    "tags": ["low-carb", "high-protein", "steamed", "healthy"],
+    "ingredients": [
+      {"name": "鱼片", "amount": "200g"},
+      {"name": "姜丝", "amount": "10g"},
+      {"name": "葱丝", "amount": "10g"},
+      {"name": "酱油", "amount": "1 tbsp"},
+      {"name": "橄榄油", "amount": "1 tsp"}
+    ],
+    "steps": [
+      "鱼片洗净摆盘",
+      "铺上姜丝",
+      "蒸锅水开后放入鱼片蒸8分钟",
+      "取出倒掉蒸出的水",
+      "淋上酱油，放上葱丝",
+      "热油浇在葱丝上提香"
+    ],
+    "nutrition": {
+      "calories": 180,
+      "protein": 35,
+      "carbs": 2,
+      "fat": 4
+    }
+  },
+  {
+    "name": "番茄鸡蛋汤",
+    "cuisine": "Chinese",
+    "tags": ["vegetarian", "low-fat", "soup", "quick"],
+    "ingredients": [
+      {"name": "番茄", "amount": "2个"},
+      {"name": "鸡蛋", "amount": "2个"},
+      {"name": "葱", "amount": "1根"},
+      {"name": "盐", "amount": "少许"},
+      {"name": "水", "amount": "500ml"}
+    ],
+    "steps": [
+      "番茄切块，鸡蛋打散",
+      "水烧开后放入番茄煮软",
+      "倒入蛋液轻轻搅动形成蛋花",
+      "加盐调味，撒上葱花"
+    ],
+    "nutrition": {
+      "calories": 150,
+      "protein": 12,
+      "carbs": 10,
+      "fat": 8
+    }
+  },
+  {
+    "name": "凉拌黄瓜鸡丝",
+    "cuisine": "Chinese",
+    "tags": ["low-carb", "high-protein", "cold-dish", "summer"],
+    "ingredients": [
+      {"name": "鸡胸肉", "amount": "150g"},
+      {"name": "黄瓜", "amount": "1根"},
+      {"name": "蒜末", "amount": "1 tsp"},
+      {"name": "酱油", "amount": "1 tbsp"},
+      {"name": "醋", "amount": "1 tbsp"},
+      {"name": "芝麻油", "amount": "1 tsp"}
+    ],
+    "steps": [
+      "鸡胸肉煮熟撕成丝",
+      "黄瓜切丝",
+      "调料混合：酱油、醋、蒜末、芝麻油",
+      "将鸡丝和黄瓜丝拌匀",
+      "倒入调料腌制10分钟即可"
+    ],
+    "nutrition": {
+      "calories": 220,
+      "protein": 32,
+      "carbs": 6,
+      "fat": 8
+    }
+  },
+  {
+    "name": "西兰花炒虾仁",
+    "cuisine": "Chinese",
+    "tags": ["low-carb", "high-protein", "seafood", "stir-fry"],
+    "ingredients": [
+      {"name": "虾仁", "amount": "150g"},
+      {"name": "西兰花", "amount": "200g"},
+      {"name": "大蒜", "amount": "2瓣"},
+      {"name": "橄榄油", "amount": "1 tbsp"},
+      {"name": "盐", "amount": "少许"}
+    ],
+    "steps": [
+      "虾仁洗净去虾线",
+      "西兰花切小朵焯水",
+      "热锅下油，爆香蒜末",
+      "加入虾仁翻炒至变色",
+      "加入西兰花翻炒",
+      "加盐调味即可"
+    ],
+    "nutrition": {
+      "calories": 240,
+      "protein": 30,
+      "carbs": 8,
+      "fat": 10
+    }
+  },
+  {
+    "name": "酸辣土豆丝",
+    "cuisine": "Chinese",
+    "tags": ["vegetarian", "spicy", "stir-fry", "quick"],
+    "ingredients": [
+      {"name": "土豆", "amount": "2个"},
+      {"name": "干辣椒", "amount": "3个"},
+      {"name": "花椒", "amount": "1/2 tsp"},
+      {"name": "醋", "amount": "2 tbsp"},
+      {"name": "盐", "amount": "少许"}
+    ],
+    "steps": [
+      "土豆切丝用水浸泡去淀粉",
+      "热锅下油，小火炒香花椒和干辣椒",
+      "大火加入土豆丝快速翻炒",
+      "烹入醋翻炒均匀",
+      "加盐调味即可"
+    ],
+    "nutrition": {
+      "calories": 180,
+      "protein": 4,
+      "carbs": 38,
+      "fat": 2
+    }
+  },
+  {
+    "name": "紫菜蛋花汤",
+    "cuisine": "Chinese",
+    "tags": ["vegetarian", "low-calorie", "soup", "quick"],
+    "ingredients": [
+      {"name": "紫菜", "amount": "5g"},
+      {"name": "鸡蛋", "amount": "1个"},
+      {"name": "盐", "amount": "少许"},
+      {"name": "水", "amount": "400ml"}
+    ],
+    "steps": [
+      "水烧开",
+      "放入紫菜煮1分钟",
+      "倒入打散的蛋液形成蛋花",
+      "加盐调味"
+    ],
+    "nutrition": {
+      "calories": 90,
+      "protein": 8,
+      "carbs": 4,
+      "fat": 5
+    }
+  },
+  {
+    "name": "蚝油生菜",
+    "cuisine": "Chinese",
+    "tags": ["vegetarian", "low-carb", "quick", "healthy"],
+    "ingredients": [
+      {"name": "生菜", "amount": "200g"},
+      {"name": "蚝油", "amount": "1 tbsp"},
+      {"name": "蒜末", "amount": "1 tsp"},
+      {"name": "橄榄油", "amount": "1 tsp"}
+    ],
+    "steps": [
+      "生菜洗净沥干",
+      "热锅下油，爆香蒜末",
+      "加入生菜大火快炒1分钟",
+      "淋入蚝油翻炒均匀",
+      "出锅即可"
+    ],
+    "nutrition": {
+      "calories": 70,
+      "protein": 3,
+      "carbs": 6,
+      "fat": 4
+    }
+  },
+  {
+    "name": "鸡胸肉沙拉",
+    "cuisine": "Fusion",
+    "tags": ["low-carb", "high-protein", "cold-dish", "healthy"],
+    "ingredients": [
+      {"name": "鸡胸肉", "amount": "150g"},
+      {"name": "生菜", "amount": "100g"},
+      {"name": "番茄", "amount": "1个"},
+      {"name": "橄榄油", "amount": "1 tbsp"},
+      {"name": "柠檬汁", "amount": "1 tbsp"},
+      {"name": "盐", "amount": "少许"}
+    ],
+    "steps": [
+      "鸡胸肉煮熟切片",
+      "生菜洗净撕成小块",
+      "番茄切块",
+      "混合所有蔬菜和鸡肉",
+      "淋上橄榄油和柠檬汁",
+      "加盐调味拌匀"
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 35,
+      "carbs": 8,
+      "fat": 12
+    }
+  }
+]
