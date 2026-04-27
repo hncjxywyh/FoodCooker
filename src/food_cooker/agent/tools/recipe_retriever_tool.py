@@ -1,6 +1,9 @@
+import logging
 from typing import Optional
 from langchain_core.tools import tool
-from food_cooker.vectorstore.chroma_client import get_chroma_client
+from food_cooker.vectorstore.hybrid_retriever import hybrid_search
+
+logger = logging.getLogger(__name__)
 
 
 @tool
@@ -9,28 +12,21 @@ def recipe_retriever_tool(
     tags_filter: Optional[list[str]] = None,
     cuisine_filter: Optional[str] = None,
     k: int = 3,
+    exclude_recipes: Optional[list[str]] = None,
 ) -> dict:
-    """Retrieve the top-k most relevant recipes from the vector store.
-    Supports optional metadata filtering by tags and cuisine."""
-    db = get_chroma_client()
-    filter_dict = {}
-    if tags_filter:
-        filter_dict["tags"] = {"$in": tags_filter}
-    if cuisine_filter:
-        filter_dict["cuisine"] = cuisine_filter
-
-    results = db.similarity_search(
-        query, k=k, filter=filter_dict if filter_dict else None
+    """Retrieve the top-k most relevant recipes using hybrid search (BM25 + vector).
+    Supports optional metadata filtering by tags and cuisine.
+    exclude_recipes: list of recipe names to exclude from results (for deduplication)."""
+    logger.debug(
+        f"recipe_retriever_tool query={query!r} k={k} "
+        f"tags_filter={tags_filter} cuisine_filter={cuisine_filter} exclude={exclude_recipes}"
     )
-    recipes = [
-        {
-            "name": r.metadata.get("name", ""),
-            "cuisine": r.metadata.get("cuisine", ""),
-            "tags": r.metadata.get("tags", []),
-            "ingredients": r.metadata.get("ingredients", []),
-            "steps": r.metadata.get("steps", []),
-            "nutrition": r.metadata.get("nutrition", {}),
-        }
-        for r in results
-    ]
-    return {"recipes": recipes, "count": len(recipes)}
+    results = hybrid_search(
+        query=query,
+        k=k,
+        tags_filter=tags_filter,
+        cuisine_filter=cuisine_filter,
+        exclude_recipes=exclude_recipes,
+    )
+    logger.info(f"recipe_retriever_tool query={query!r} returned {len(results)} recipes")
+    return {"recipes": results, "count": len(results)}

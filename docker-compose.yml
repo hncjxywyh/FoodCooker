@@ -1,4 +1,23 @@
 services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY:-}
+      - DASHSCOPE_MODEL_NAME=${DASHSCOPE_MODEL_NAME:-qwen-plus}
+      - LLM_PROVIDER=${LLM_PROVIDER:-dashscope}
+      - EMBEDDING_PROVIDER=${EMBEDDING_PROVIDER:-dashscope}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-change-me-in-production}
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
   postgres:
     image: postgres:16
     environment:
@@ -10,5 +29,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
 volumes:
   postgres_data:
+  redis_data:

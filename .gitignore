@@ -50,6 +50,8 @@ dmypy.json
 # 数据和缓存（如果包含敏感数据）
 data/chroma_db/
 data/history/
+data/bm25_index.pkl
+data/auth.db*
 
 # 操作系统
 .DS_Store
